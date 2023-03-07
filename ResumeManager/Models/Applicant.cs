@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ResumeManager.Models
 {
@@ -31,5 +32,11 @@ namespace ResumeManager.Models
         [DisplayName("Total Experience in Years")]
         public int TotalExperience { get; set; }
         public virtual List<Experience> Experiences { get; set; } = new List<Experience>();//detail very important
+        public string PhotoUrl { get; set; }
+
+        [Required(ErrorMessage = "Please choose the Profile Photo")]
+        [Display(Name = "Profile Photo")]
+        [NotMapped]
+        public IFormFile ProfilePhoto { get; set; }
     }
 }
