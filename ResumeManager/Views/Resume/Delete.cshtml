@@ -1,0 +1,107 @@
+﻿@model ResumeManager.Models.Applicant
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Applicant</h4>
+<hr />
+<div class="col-11 mx-auto pt-0">
+
+	<div class="text-center bg-danger">
+		<h1>Are you sure want to delete	this?</h1>
+	</div>
+
+	<div class="card">
+		<div class="card-header bg-primary text-uppercase text-white" style="height:45px">
+			<h4>Delete Applicant</h4>
+		</div>
+		<div class="row">
+			<form id="ApplicantForm" enctype="multipart/form-data" asp-action="Delete">
+				<input type="hidden" asp-for="Id" />
+				<div class="col-md-6">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="Name" class="control-label"></label>
+						<input asp-for="Name" class="form-control" />						
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label asp-for="Gender" class="control-label"></label>
+						<input asp-for="Gender" class="form-control-plaintext" readonly />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label asp-for="Age" class="control-label"></label>
+						<input asp-for="Age" class="form-control-plaintext" readonly />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label asp-for="Qualification" class="control-label"></label>
+						<input asp-for="Qualification" class="form-control-plaintext" readonly />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label asp-for="TotalExperience" class="control-label"></label>
+						<input asp-for="TotalExperience" class="form-control-plaintext" readonly />						
+					</div>
+				</div>
+				<div class="col-md-6 btn-group">
+					<img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+				</div>
+
+				<table id="ExpTable" class="table table-striped table-sm">
+					<thead>
+						<tr>
+							<th>Company Name</th>
+							<th>Designation</th>
+							<th>YearsWorked</th>
+						</tr>
+					</thead>
+					<tbody>
+						@*@foreach (var item in Model.Experiences)*@
+						@for (int i = 0; i < Model.Experiences.Count; i++)
+
+						{
+							<tr>
+								@* <td><input type="text" asp-for="@item.CompanyName"/></td>*@
+								@*<td>@Html.EditorFor(x=>x.Experiences[i].CompanyName,new{htmlAttributes=new{@class="form-control"}})</td>*@
+								<td><input asp-for="@Model.Experiences[i].CompanyName" class="form-control-plaintext" readonly/></td>
+
+								@* <td><input type="text" asp-for="@item.Designation" /></td>*@
+								@*<td>@Html.EditorFor(x=>x.Experiences[i].Designation,new{htmlAttributes=new{@class="form-control"}})</td>*@
+								<td><input asp-for="@Model.Experiences[i].Designation" class="form-control-plaintext" readonly /></td>
+								@*<td><input type="text" asp-for="@item.YearsWorked"/></td>*@
+								@*<td>@Html.EditorFor(x=>x.Experiences[i].YearsWorked,new{htmlAttributes=new{@class="form-control"}})</td>*@
+								<td><input asp-for="@Model.Experiences[i].YearsWorked" class="form-control-plaintext" readonly /></td>
+							</tr>
+						}
+					</tbody>
+				</table>
+					<div class="col-12 btn-group">
+						<div class="col-6 form-group text-right p-2">
+							<a asp-action="Index" class="btn btn-secondary">Back</a>
+						</div>
+						<div class="col-6 form-group text-left p-2">
+							<input type="submit" value="Delete" class="btn btn-danger" />
+						</div>
+					</div>
+			</form>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+		
+	}
+}

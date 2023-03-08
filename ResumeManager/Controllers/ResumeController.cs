@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ResumeManager.Data;
 using ResumeManager.Models;
 
@@ -54,6 +55,26 @@ namespace ResumeManager.Controllers
 				}
 			}
 			return uniqueFileName;
+		}
+
+        public IActionResult Details(int id)
+        {
+            Applicant applicant= dbContext.Applicants.Include(a => a.Experiences).Where(x=>x.Id==id).FirstOrDefault();
+            return View(applicant);
+        }
+        [HttpGet]
+		public IActionResult Delete(int id)
+		{
+			Applicant applicant = dbContext.Applicants.Include(a => a.Experiences).Where(x => x.Id == id).FirstOrDefault();
+			return View(applicant);
+		}
+		[HttpPost]
+		public IActionResult Delete(Applicant applicant)
+		{
+			dbContext.Attach(applicant);
+			dbContext.Entry(applicant).State= EntityState.Deleted;
+			dbContext.SaveChanges();
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }
