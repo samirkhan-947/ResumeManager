@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ResumeManager.Data;
 using ResumeManager.Models;
@@ -26,8 +27,7 @@ namespace ResumeManager.Controllers
         {
             Applicant applicant = new Applicant();
             applicant.Experiences.Add(new Experience() { ApplicantId = 1 });
-            //applicant.Experiences.Add(new Experience() { ApplicantId = 2 });
-            //applicant.Experiences.Add(new Experience() { ApplicantId = 3 });
+            ViewBag.Gender = GetGender();
             return View(applicant);
         }
         [HttpPost]
@@ -75,6 +75,29 @@ namespace ResumeManager.Controllers
 			dbContext.Entry(applicant).State= EntityState.Deleted;
 			dbContext.SaveChanges();
 			return RedirectToAction(nameof(Index));
+		}
+		private List<SelectListItem> GetGender()
+		{
+			List<SelectListItem> selGender = new List<SelectListItem>();
+			var SetItem =new SelectListItem()
+			{
+				Value="",
+				Text="Select Gender"
+			};
+			selGender.Insert(0, SetItem);
+			SetItem = new SelectListItem()
+			{
+				Value="Male",
+				Text="Male"
+			};
+			selGender.Add(SetItem);			
+			SetItem = new SelectListItem()
+			{
+				Value = "FeMale",
+				Text = "FeMale"
+			};
+			selGender.Add(SetItem);
+			return selGender;
 		}
 	}
 }
